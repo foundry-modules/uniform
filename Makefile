@@ -1,0 +1,10 @@
+include ../../build/modules.mk
+
+MODULE		= uniform
+FILENAME	= jquery.${MODULE}.js
+PRODUCTION	= ${PRODUCTION_DIR}/${FILENAME}
+DEVELOPMENT = ${DEVELOPMENT_DIR}/${FILENAME}
+
+all:
+	${MODULARIZE} -n "${MODULE}" ${SOURCE} > ${DEVELOPMENT}
+	${UGLIFYJS} ${DEVELOPMENT} > ${PRODUCTION}
