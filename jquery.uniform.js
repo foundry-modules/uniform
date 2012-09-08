@@ -1,4 +1,7 @@
 
+$.require()
+.stylesheet( 'uniform/css/uniform.default' )
+.done(function($){
 
 /**
 Uniform v1.7.5
@@ -671,3 +674,5 @@ Enjoy!
     });
   };
 })(jQuery);
+
+});
