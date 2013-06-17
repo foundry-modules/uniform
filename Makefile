@@ -1,42 +1,16 @@
+all: modularize-script minify-script convert-style minify-style lessify-style copy-assets
+
 include ../../build/modules.mk
 
-MODULE		= uniform
-FILENAME	= jquery.${MODULE}.js
-OUTPUTFILE	= ${MODULE}.js
-SOURCE 		= ${FILENAME}
-PRODUCTION	= ${PRODUCTION_DIR}/${OUTPUTFILE}
-DEVELOPMENT = ${DEVELOPMENT_DIR}/${OUTPUTFILE}
-PRODUCTION_FOLDER	= ${PRODUCTION_DIR}/${MODULE}
-DEVELOPMENT_FOLDER	= ${DEVELOPMENT_DIR}/${MODULE}
+MODULE = uniform
+MODULARIZE_OPTIONS = -jq
 
-all: premake body assets
+SOURCE_SCRIPT_FOLDER = .
 
-premake:
-	mkdir -p ${DEVELOPMENT_FOLDER}
-	mkdir -p ${PRODUCTION_FOLDER}
+SOURCE_STYLE_FILE = css/uniform.default.css
 
-body:
-	${MODULARIZE} -jq -n "${MODULE}" ${SOURCE} > ${DEVELOPMENT}
-	${UGLIFYJS} ${DEVELOPMENT} > ${PRODUCTION}
+SOURCE_ASSET_FILES = images/*
+TARGET_ASSET_FOLDER_NAME = images
 
-assets:
-
-	# Create css folder
-	mkdir -p ${DEVELOPMENT_FOLDER}/css
-	mkdir -p ${PRODUCTION_FOLDER}/css
-
-	# Create images folder
-	mkdir -p ${DEVELOPMENT_FOLDER}/images
-	mkdir -p ${PRODUCTION_FOLDER}/images
-
-	cp -Rp css/* ${DEVELOPMENT_FOLDER}/css/
-	cp -Rp css/* ${PRODUCTION_FOLDER}/css/
-
-	cp -Rp images/* ${DEVELOPMENT_FOLDER}/images/
-	cp -Rp images/* ${PRODUCTION_FOLDER}/images/
-
-clean:
-	rm -rf ${DEVELOPMENT}
-	rm -rf ${DEVELOPMENT_FOLDER}
-	rm -rf ${PRODUCTION}
-	rm -rf ${PRODUCTION_FOLDER}
+TARGET_STYLE_CONVERTER = sed "s/url('..\/images/url('images/g"
+TARGET_STYLE_LESS_CONVERTER = sed "s/url('..\/images/url('@{foundry_uri}\/uniform\/images/g"
