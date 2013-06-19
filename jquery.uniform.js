@@ -1,8 +1,3 @@
-
-$.require()
-.stylesheet( 'uniform/css/uniform.default' )
-.done(function($){
-
 /**
 Uniform v1.7.5
 Copyright © 2009 Josh Pyles / Pixelmatrix Design LLC
@@ -674,5 +669,3 @@ Enjoy!
     });
   };
 })(jQuery);
-
-});
